@@ -22,6 +22,7 @@ const contentData = {
             <strong>Email:</strong> KonoWry@gmail.com<br>
             <strong>IG:</strong> aikaowa<br>
             <strong>Github:</strong> AiKaoWa
+            <button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>
         `
     },
     projects: {
@@ -89,8 +90,6 @@ const contentData = {
     }
 };
 
-
-// Add event listeners to the buttons
 document.getElementById("aboutMe").addEventListener("click", function() {
     displayContent(contentData.aboutMe.title, contentData.aboutMe.description);
 });
@@ -107,46 +106,146 @@ document.getElementById("certificates").addEventListener("click", function() {
     displayContent(contentData.certificates.title, contentData.certificates.description);
 });
 
-// Function to display content in the stadium-shaped box
 function displayContent(title, description) {
     const stadiumBox = document.getElementById("stadium-box");
     const contentArea = document.getElementById("content");
 
-    // Fade out the content area
-    contentArea.classList.remove('show'); // Remove fade-in class to trigger fade-out
+    contentArea.classList.remove('show'); 
     setTimeout(() => {
-        // Update the content after the fade-out
         stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p>`;
 
-        // Show the stadium box with a fade-in effect
-        stadiumBox.classList.remove('show'); // Remove class first for smooth transition
+        stadiumBox.classList.remove('show'); 
         setTimeout(() => {
-            stadiumBox.classList.add('show'); // Add class after a short delay
-        }, 10); // Small timeout to ensure transition
+            stadiumBox.classList.add('show'); 
+        }, 10); 
 
-        // Fade in the content area
-        contentArea.classList.add('show'); // Add fade-in class to show content again
-    }, 250); // Match this timeout with the CSS fade-out duration
+        contentArea.classList.add('show'); 
+    }, 250); 
 }
-// Add event listeners to the buttons with a click effect
+
 document.querySelectorAll(".menu-item").forEach(button => {
     button.addEventListener("click", () => {
-        // Remove the 'active' class from all buttons
         document.querySelectorAll(".menu-item").forEach(btn => btn.classList.remove('active'));
         
-        // Add class to the clicked button
         button.classList.add('active');
         
-        // Call the displayContent function with the corresponding data
         if (button.id) {
             displayContent(contentData[button.id].title, contentData[button.id].description);
         }
     });
 });
 
+function closeContent() {
+    const stadiumBox = document.getElementById("stadium-box");
+    stadiumBox.classList.remove('show'); 
+}
 
-// Hide loading screen when the page is fully loaded
+document.addEventListener("click", function(event) {
+    if (event.target && event.target.id === "close-button") {
+        closeContent();
+    }
+});
+
 window.addEventListener("load", function() {
     const loadingScreen = document.getElementById("loading-screen");
     loadingScreen.style.display = "none";
 });
+
+let activeButton = null; 
+
+function closeContent() {
+    const stadiumBox = document.getElementById("stadium-box");
+    stadiumBox.classList.remove('show'); 
+
+    if (activeButton) {
+        activeButton.classList.remove('active-button'); 
+        activeButton = null; 
+    }
+}
+
+document.addEventListener("click", function(event) {
+    if (event.target && event.target.id === "close-button") {
+        closeContent();
+    }
+});
+
+function displayContent(title, description, button) {
+    const stadiumBox = document.getElementById("stadium-box");
+    const contentArea = document.getElementById("content");
+
+    stadiumBox.style.display = "block"; 
+    
+    stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p><button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>`;
+    
+    stadiumBox.classList.remove('show'); 
+    setTimeout(() => {
+        stadiumBox.classList.add('show'); 
+    }, 10); 
+
+    contentArea.classList.remove('show'); 
+    setTimeout(() => {
+        contentArea.classList.add('show'); 
+    }, 10); 
+
+    if (activeButton) {
+        activeButton.classList.remove('active-button');
+    }
+
+    activeButton = button;
+    activeButton.classList.add('active-button');
+}
+
+document.getElementById("aboutMe").addEventListener("click", function() {
+    displayContent(contentData.aboutMe.title, contentData.aboutMe.description, this);
+});
+
+document.getElementById("projects").addEventListener("click", function() {
+    displayContent(contentData.projects.title, contentData.projects.description, this);
+});
+
+document.getElementById("activities").addEventListener("click", function() {
+    displayContent(contentData.activities.title, contentData.activities.description, this);
+});
+
+document.getElementById("certificates").addEventListener("click", function() {
+    displayContent(contentData.certificates.title, contentData.certificates.description, this);
+});
+
+function displayContent(title, description, button) {
+    const stadiumBox = document.getElementById("stadium-box");
+    const contentArea = document.getElementById("content");
+
+    const isMobile = window.innerWidth <= 768;
+
+    stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p><button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>`;
+    
+    stadiumBox.classList.remove('show'); 
+    setTimeout(() => {
+        stadiumBox.classList.add('show'); 
+    }, 10); 
+
+    if (isMobile) {
+        stadiumBox.style.position = 'absolute';
+        stadiumBox.style.top = `${button.offsetTop}px`;
+        stadiumBox.style.left = '50%';
+        stadiumBox.style.transform = 'translate(-50%, 0)'; 
+    } else {
+        stadiumBox.style.position = 'absolute';
+        stadiumBox.style.top = '50%';
+        stadiumBox.style.left = '50%';
+        stadiumBox.style.transform = 'translate(-50%, -50%)';
+    }
+
+
+    contentArea.classList.remove('show'); 
+    setTimeout(() => {
+        contentArea.classList.add('show'); 
+    }, 10); 
+
+    if (activeButton) {
+        activeButton.classList.remove('active-button');
+    }
+
+    activeButton = button;
+    activeButton.classList.add('active-button');
+}
