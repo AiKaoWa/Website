@@ -232,3 +232,49 @@ body {
     border-radius: 10px;
     border: 3px solid black;
 }
+
+/* General styles for mobile responsiveness */
+@media (max-width: 768px) {
+    /* Adjust the sidebar to be vertically centered */
+    .sidebar {
+        width: 100%; /* Full width on mobile */
+        height: auto; /* Let height adjust automatically */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    /* Center the buttons on mobile */
+    .menu-item {
+        width: 90%; /* Make buttons wider on mobile */
+        margin: 10px 0; /* Adjust margins */
+    }
+
+    /* Center the stadium box (content) relative to buttons */
+    .stadium-box {
+        width: 90%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Ensure the content fades in front of the buttons */
+    .content {
+        width: 100%;
+        padding: 0;
+        position: absolute; /* Place content on top */
+        top: 50%; /* Position in the center */
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Add scroll to the stadium-box on mobile for long content */
+.stadium-box {
+    max-height: 70vh; /* Limit height to fit mobile screens */
+    overflow-y: auto; /* Add vertical scroll for overflowing content */
+    padding: 20px;
+    background-color: #ecf0f1;
+}
