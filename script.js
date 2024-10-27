@@ -32,7 +32,7 @@ const contentData = {
             <img src="images/eye.png" style="display: block; margin: 20px auto; width: 400px; "><br>
             <strong>Objective:</strong> The main objective of the Smart White Cane project is to assist visually impaired individuals in their daily lives, making them more comfortable.<br>
             <h2 style="font-size: 24px; margin-top: 20px;">Waste Collector and Water Purifier Machine</h2>
-            <img src="images/boat.jpg" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
+            <img src="images/real.jpg" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
             <strong>Objective:</strong> The main objective of the Waste Collector and Water Purifier Machine is to recycle our everyday waste, such as water bottles, PVC pipes and future boards to create something that can help clean the environment.<br>
             <h2 style="font-size: 24px; margin-top: 20px;">Image Classifer</h2>
             <img src="images/ai.png" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
@@ -110,15 +110,14 @@ function displayContent(title, description) {
     const stadiumBox = document.getElementById("stadium-box");
     const contentArea = document.getElementById("content");
 
+
     contentArea.classList.remove('show'); 
     setTimeout(() => {
         stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p>`;
-
-        stadiumBox.classList.remove('show'); 
+        stadiumBox.classList.remove('show');
         setTimeout(() => {
             stadiumBox.classList.add('show'); 
         }, 10); 
-
         contentArea.classList.add('show'); 
     }, 250); 
 }
@@ -126,9 +125,7 @@ function displayContent(title, description) {
 document.querySelectorAll(".menu-item").forEach(button => {
     button.addEventListener("click", () => {
         document.querySelectorAll(".menu-item").forEach(btn => btn.classList.remove('active'));
-        
         button.classList.add('active');
-        
         if (button.id) {
             displayContent(contentData[button.id].title, contentData[button.id].description);
         }
@@ -137,7 +134,7 @@ document.querySelectorAll(".menu-item").forEach(button => {
 
 function closeContent() {
     const stadiumBox = document.getElementById("stadium-box");
-    stadiumBox.classList.remove('show'); 
+    stadiumBox.classList.remove('show');
 }
 
 document.addEventListener("click", function(event) {
@@ -172,16 +169,12 @@ document.addEventListener("click", function(event) {
 function displayContent(title, description, button) {
     const stadiumBox = document.getElementById("stadium-box");
     const contentArea = document.getElementById("content");
-
     stadiumBox.style.display = "block"; 
-    
     stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p><button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>`;
-    
     stadiumBox.classList.remove('show'); 
     setTimeout(() => {
         stadiumBox.classList.add('show'); 
     }, 10); 
-
     contentArea.classList.remove('show'); 
     setTimeout(() => {
         contentArea.classList.add('show'); 
@@ -211,41 +204,45 @@ document.getElementById("certificates").addEventListener("click", function() {
     displayContent(contentData.certificates.title, contentData.certificates.description, this);
 });
 
-function displayContent(title, description, button) {
+document.addEventListener("DOMContentLoaded", () => {
     const stadiumBox = document.getElementById("stadium-box");
     const contentArea = document.getElementById("content");
+    let activeButton = null;
 
-    const isMobile = window.innerWidth <= 768;
+    function displayContent(title, description, button) {
+        stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p><button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>`;
+        stadiumBox.classList.add('show');
+        contentArea.classList.add('show');
 
-    stadiumBox.innerHTML = `<h1>${title}</h1><p>${description}</p><button id="close-button" style="position: absolute; top: 10px; right: 20px; background: none; border: none; font-size: 20px; cursor: pointer;">✖</button>`;
-    
-    stadiumBox.classList.remove('show'); 
-    setTimeout(() => {
-        stadiumBox.classList.add('show'); 
-    }, 10); 
-
-    if (isMobile) {
-        stadiumBox.style.position = 'absolute';
-        stadiumBox.style.top = `${button.offsetTop}px`;
-        stadiumBox.style.left = '50%';
-        stadiumBox.style.transform = 'translate(-50%, 0)'; 
-    } else {
-        stadiumBox.style.position = 'absolute';
-        stadiumBox.style.top = '50%';
-        stadiumBox.style.left = '50%';
-        stadiumBox.style.transform = 'translate(-50%, -50%)';
+        if (activeButton) activeButton.classList.remove('active-button');
+        activeButton = button;
+        activeButton.classList.add('active-button');
     }
 
-
-    contentArea.classList.remove('show'); 
-    setTimeout(() => {
-        contentArea.classList.add('show'); 
-    }, 10); 
-
-    if (activeButton) {
-        activeButton.classList.remove('active-button');
+    function closeContent() {
+        stadiumBox.classList.remove('show');
+        contentArea.classList.remove('show');
+        if (activeButton) activeButton.classList.remove('active-button');
+        activeButton = null;
     }
 
-    activeButton = button;
-    activeButton.classList.add('active-button');
-}
+    document.querySelectorAll(".menu-item").forEach(button => {
+        button.addEventListener("click", () => {
+            const content = contentData[button.id];
+            if (content) {
+                displayContent(content.title, content.description, button);
+            }
+        });
+    });
+
+    document.addEventListener("click", (event) => {
+        if (event.target && event.target.id === "close-button") {
+            closeContent();
+        }
+    });
+
+    window.addEventListener("load", function() {
+        const loadingScreen = document.getElementById("loading-screen");
+        loadingScreen.style.display = "none";
+    });
+});
