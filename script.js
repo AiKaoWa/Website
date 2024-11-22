@@ -32,7 +32,7 @@ const contentData = {
             <img src="images/eye.png" style="display: block; margin: 20px auto; width: 400px; "><br>
             <strong>Objective:</strong> The main objective of the Smart White Cane project is to assist visually impaired individuals in their daily lives, making them more comfortable.<br>
             <h2 style="font-size: 24px; margin-top: 20px;">Waste Collector and Water Purifier Machine</h2>
-            <img src="images/real.jpg" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
+            <img src="images/boat.jpg" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
             <strong>Objective:</strong> The main objective of the Waste Collector and Water Purifier Machine is to recycle our everyday waste, such as water bottles, PVC pipes and future boards to create something that can help clean the environment.<br>
             <h2 style="font-size: 24px; margin-top: 20px;">Image Classifer</h2>
             <img src="images/ai.png" style="display: block; margin: 20px auto; width: 200px; border-radius: 10px; border: 3px solid black;"><br>
